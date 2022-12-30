@@ -22,7 +22,7 @@ services:
         image: 'quay.io/keycloak/keycloak:latest'
         command:
             - start-dev
-            - --log-level=DEBUG
+            - --log-level=INFO
             - --db=postgres
             - --db-url-host=postgresql
             - --db-url-port=5432
