@@ -1,0 +1,4 @@
+databaseChangeLog:
+    -   includeAll:
+            path: 'classpath:db/changelog/'
+            filter: by.vitalylobatsevich.teachme.liquibase.ExcludeMainChangeLogFilter

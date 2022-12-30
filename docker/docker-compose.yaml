@@ -1,0 +1,44 @@
+version: '3.9'
+networks:
+    main:
+services:
+    postgresql:
+        build:
+            context: ./postgresql/
+            dockerfile: Dockerfile
+        container_name: postgresql
+        networks:
+            - main
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: server
+        volumes:
+            - './postgresql/data/:/var/lib/postgresql/data/'
+            - './shared/:/shared/'
+    keycloak:
+        image: 'quay.io/keycloak/keycloak:latest'
+        command:
+            - start-dev
+            - --log-level=DEBUG
+            - --db=postgres
+            - --db-url-host=postgresql
+            - --db-url-port=5432
+            - --db-url-database=keycloak
+            - --db-username=postgres
+            - --db-password=postgres
+            - --http-port=8081
+            - --health-enabled=true
+            - --metrics-enabled=true
+        container_name: keycloak
+        networks:
+            - main
+        ports:
+            - '8081:8081'
+        environment:
+            KEYCLOAK_ADMIN: admin
+            KEYCLOAK_ADMIN_PASSWORD: admin
+        depends_on:
+            - postgresql

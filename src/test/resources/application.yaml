@@ -1,0 +1,18 @@
+spring:
+    profiles:
+        active:
+            - test
+    jpa:
+        hibernate:
+            ddl-auto: none
+    datasource:
+        url: 'jdbc:postgresql://localhost:5432/server'
+        username:
+        password:
+    liquibase:
+        change-log: 'classpath:db/changelog/db.changelog-main.yaml'
+        contexts: default
+logging:
+    level:
+        root: INFO
+    file: application_test.log

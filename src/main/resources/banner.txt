@@ -1,0 +1,9 @@
+,--------.                         ,--.        ,--.   ,--.
+'--.  .--'  ,---.   ,--,--.  ,---. |  ,---.    |   `.'   |  ,---.
+   |  |    | .-. : ' ,-.  | | .--' |  .-.  |   |  |'.'|  | | .-. :
+   |  |    \   --. \ '-'  | \ `--. |  | |  |   |  |   |  | \   --.
+   `--'     `----'  `--`--'  `---' `--' `--'   `--'   `--'  `----'
+
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}
+by Vitali Labatsevich (vitaly.lobatsevich@gmail.com)
