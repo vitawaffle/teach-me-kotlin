@@ -12,6 +12,13 @@ spring:
     liquibase:
         change-log: 'classpath:db/changelog/db.changelog-main.yaml'
         contexts: default
+    security:
+        oauth2:
+            client:
+                registration:
+                    keycloak:
+                        client-id:
+                        client-secret:
 logging:
     level:
         root: INFO
