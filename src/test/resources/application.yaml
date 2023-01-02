@@ -6,12 +6,12 @@ spring:
         hibernate:
             ddl-auto: none
     datasource:
-        url: 'jdbc:postgresql://localhost:5432/server'
+        url: 'jdbc:postgresql://localhost:5432/server_test'
         username:
         password:
     liquibase:
         change-log: 'classpath:db/changelog/db.changelog-main.yaml'
-        contexts: default
+        contexts: default, test
 logging:
     level:
         root: INFO

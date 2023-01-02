@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.keycloak:keycloak-spring-boot-starter")
+    implementation("org.keycloak:keycloak-spring-boot-starter:20.0.2")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-mail")
