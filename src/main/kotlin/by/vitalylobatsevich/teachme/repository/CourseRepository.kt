@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CourseRepository : LongIdEntityRepository<Course> {
     fun findByName(name: String): Course?
+    fun findByUserId(userId: String): List<Course>
     fun existsByName(name: String): Boolean
 }

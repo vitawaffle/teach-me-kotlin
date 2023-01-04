@@ -7,5 +7,6 @@ import jakarta.persistence.Table
 @Table(name = "courses")
 class Course(
     var name: String,
+    var userId: String,
     id: Long? = null,
 ) : LongIdEntity(id)

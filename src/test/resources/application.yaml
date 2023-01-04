@@ -12,6 +12,11 @@ spring:
     liquibase:
         change-log: 'classpath:db/changelog/db.changelog-main.yaml'
         contexts: default, test
+    security:
+        oauth2:
+            resourceserver:
+                jwt:
+                    jwk-set-uri: 'http://localhost:8081/realms/teach-me/protocol/openid-connect/certs'
 logging:
     level:
         root: INFO
