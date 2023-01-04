@@ -15,18 +15,18 @@ class SecurityConfiguration {
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
         http.authorizeHttpRequests {
-            it.requestMatchers(GET, "/", "/login").permitAll()
+            it.requestMatchers(GET, "/").permitAll()
                 .anyRequest().authenticated()
         }.formLogin {
             it.disable()
-        }.logout {
-            it.permitAll()
         }.sessionManagement {
             it.sessionCreationPolicy(STATELESS)
         }.csrf {
             it.disable()
         }.cors {
             it.disable()
+        }.oauth2ResourceServer {
+            it.jwt()
         }.build()
 
 }

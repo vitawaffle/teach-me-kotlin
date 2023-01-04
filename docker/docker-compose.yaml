@@ -2,6 +2,19 @@ version: '3.9'
 networks:
     main:
 services:
+    nginx:
+        build:
+            context: ./nginx/
+            dockerfile: Dockerfile
+        container_name: nginx
+        networks:
+            - main
+        ports:
+            - '80:80'
+        volumes:
+            - './nginx/conf/:/etc/nginx/'
+            - './nginx/log/:/var/log/nginx/'
+            - './shared/:/shared/'
     postgresql:
         build:
             context: ./postgresql/

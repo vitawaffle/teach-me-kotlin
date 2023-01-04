@@ -15,4 +15,4 @@ spring:
 logging:
     level:
         root: INFO
-    file: application-test.log
+    file: log/application-test.log
