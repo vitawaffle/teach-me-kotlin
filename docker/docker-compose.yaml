@@ -1,57 +1,56 @@
-version: '3.9'
-networks:
-    main:
 services:
-    nginx:
-        build:
-            context: ./nginx/
-            dockerfile: Dockerfile
-        container_name: nginx
+    postgres:
+        build: postgres
+        container_name: teach-me_postgres
         networks:
-            - main
-        ports:
-            - '80:80'
-        volumes:
-            - './nginx/conf/:/etc/nginx/'
-            - './nginx/log/:/var/log/nginx/'
-            - './shared/:/shared/'
-    postgresql:
-        build:
-            context: ./postgresql/
-            dockerfile: Dockerfile
-        container_name: postgresql
-        networks:
-            - main
+            - teach-me
         ports:
             - '5432:5432'
         environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: server
+            POSTGRES_PASSWORD: ${DOCKER_COMPOSE_POSTGRES_PASSWORD-postgres}
+            POSTGRES_DB: teach_me
         volumes:
-            - './postgresql/data/:/var/lib/postgresql/data/'
             - './shared/:/shared/'
+            - './postgres/data/:/var/lib/postgresql/data/'
+            - './postgres/sql/:/docker-entrypoint-initdb.d/'
     keycloak:
         image: 'quay.io/keycloak/keycloak:latest'
         command:
             - start-dev
-            - --log-level=INFO
+            - --log-level=${DOCKER_COMPOSE_KEYCLOAK_LOG_LEVEL-INFO}
             - --db=postgres
-            - --db-url-host=postgresql
+            - --db-url-host=postgres
             - --db-url-port=5432
             - --db-url-database=keycloak
             - --db-username=postgres
-            - --db-password=postgres
+            - --db-password=${DOCKER_COMPOSE_POSTGRES_PASSWORD-postgres}
             - --http-port=8081
             - --health-enabled=true
             - --metrics-enabled=true
-        container_name: keycloak
+        container_name: teach-me_keycloak
         networks:
-            - main
+            - teach-me
         ports:
             - '8081:8081'
         environment:
-            KEYCLOAK_ADMIN: admin
-            KEYCLOAK_ADMIN_PASSWORD: admin
+            KEYCLOAK_ADMIN: ${DOCKER_COMPOSE_KEYCLOAK_ADMIN-admin}
+            KEYCLOAK_ADMIN_PASSWORD: ${DOCKER_COMPOSE_KEYCLOAK_ADMIN_PASSWORD-admin}
         depends_on:
-            - postgresql
+            - postgres
+        restart: on-failure
+    nginx:
+        build: ./nginx/
+        container_name: teach-me_nginx
+        networks:
+            - teach-me
+        ports:
+            - '80:80'
+        volumes:
+            - './shared/:/shared/'
+            - './nginx/conf/:/etc/nginx/'
+            - './nginx/log/:/var/log/nginx/'
+        depends_on:
+            - keycloak
+
+networks:
+    teach-me: {}
